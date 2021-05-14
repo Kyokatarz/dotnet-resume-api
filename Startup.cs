@@ -11,7 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
 
 namespace dotnet_resume
 {
@@ -28,8 +27,12 @@ namespace dotnet_resume
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<ResumeContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("ResumeConnection")));
+
       services.AddControllers();
-      services.AddScoped<IResumeRepo, MockResumeRepo>();
+
+      services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+      // services.AddScoped<IResumeRepo, MockResumeRepo>();
+      services.AddScoped<IResumeRepo, SqlResumeRepo>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,8 +41,6 @@ namespace dotnet_resume
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
-        app.UseSwagger();
-        app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "dotnet_resume v1"));
       }
 
       app.UseRouting();
