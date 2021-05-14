@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using AutoMapper;
 using DotnetResume.Data;
+using DotnetResume.Dtos;
 using DotnetResume.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,26 +13,33 @@ namespace DotnetResume.Controllers
   public class ResumesController : ControllerBase
   {
     private readonly IResumeRepo _repository;
+    private readonly IMapper _mapper;
 
-    public ResumesController(IResumeRepo repository)
+    public ResumesController(IResumeRepo repository, IMapper mapper)
     {
       _repository = repository;
+      _mapper = mapper;
     }
-    //private readonly MockResumeRepo _repository = new MockResumeRepo();
+
     //GET api/resumes
     [HttpGet]
-    public ActionResult<IEnumerable<Resume>> GetAllResumes()
+    public ActionResult<IEnumerable<ResumeReadDto>> GetAllResumes()
     {
       var resumes = _repository.GetAllResumes();
-      return Ok(resumes);
+      return Ok(_mapper.Map<IEnumerable<ResumeReadDto>>(resumes));
     }
 
     //GET api/resumes/{id}
     [HttpGet("{id}")]
-    public ActionResult<Resume> GetResumeById(int id)
+    public ActionResult<ResumeReadDto> GetResumeById(int id)
     {
       var resume = _repository.GetResumeById(id);
-      return Ok(resume);
+      if (resume != null)
+      {
+        return Ok(_mapper.Map<ResumeReadDto>(resume));
+      }
+
+      return NotFound();
     }
   }
 }
