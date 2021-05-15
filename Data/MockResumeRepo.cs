@@ -5,6 +5,11 @@ namespace DotnetResume.Data
 {
   public class MockResumeRepo : IResumeRepo
   {
+    public void CreateResume(Resume newResume)
+    {
+      throw new System.NotImplementedException();
+    }
+
     public IEnumerable<Resume> GetAllResumes()
     {
       var resumes = new List<Resume>{
@@ -19,6 +24,16 @@ namespace DotnetResume.Data
     public Resume GetResumeById(int id)
     {
       return new Resume { ResumeId = 0, ResumeCode = "A1", ResumeName = "Applicant1", Deleted = false };
+    }
+
+    public bool SaveChanges()
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public void UpdateResume(Resume newResume)
+    {
+      throw new System.NotImplementedException();
     }
   }
 }

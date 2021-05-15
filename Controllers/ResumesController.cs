@@ -22,6 +22,7 @@ namespace DotnetResume.Controllers
     }
 
     //GET api/resumes
+    //Get all resumes
     [HttpGet]
     public ActionResult<IEnumerable<ResumeReadDto>> GetAllResumes()
     {
@@ -30,7 +31,8 @@ namespace DotnetResume.Controllers
     }
 
     //GET api/resumes/{id}
-    [HttpGet("{id}")]
+    //Get a resume by id
+    [HttpGet("{id}", Name = "GetResumeById")]
     public ActionResult<ResumeReadDto> GetResumeById(int id)
     {
       var resume = _repository.GetResumeById(id);
@@ -40,6 +42,20 @@ namespace DotnetResume.Controllers
       }
 
       return NotFound();
+    }
+
+    //POST api/resumes
+    //Create new resume
+    [HttpPost]
+    public ActionResult<ResumeReadDto> CreateResume(ResumeCreateDto dto)
+    {
+      var resumeModel = _mapper.Map<Resume>(dto);
+      _repository.CreateResume(resumeModel);
+      _repository.SaveChanges();
+
+      var resumeReadDto = _mapper.Map<ResumeReadDto>(resumeModel);
+
+      return CreatedAtRoute(nameof(GetResumeById), new { Id = resumeReadDto.ResumeId }, resumeReadDto);
     }
   }
 }

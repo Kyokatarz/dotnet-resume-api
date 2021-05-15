@@ -10,6 +10,7 @@ namespace DotnetResume.Profiles
     public ResumesProfile()
     {
       CreateMap<Resume, ResumeReadDto>();
+      CreateMap<ResumeCreateDto, Resume>();
     }
   }
 }
