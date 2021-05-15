@@ -57,5 +57,29 @@ namespace DotnetResume.Controllers
 
       return CreatedAtRoute(nameof(GetResumeById), new { Id = resumeReadDto.ResumeId }, resumeReadDto);
     }
+
+    //PUT api/resumes/{id}
+    //Update resume with id
+    [HttpPut("{id}")]
+    public ActionResult UpdateResume(int id, ResumeUpdateDto dto)
+    {
+      var resumeModelFromRepo = _repository.GetResumeById(id);
+      if (resumeModelFromRepo == null) return NotFound();
+
+      _mapper.Map(dto, resumeModelFromRepo);
+
+      _repository.UpdateResume(resumeModelFromRepo);
+
+      _repository.SaveChanges();
+
+      return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+
+    public ActionResult DeleteResume(int id)
+    {
+
+    }
   }
 }

@@ -11,6 +11,8 @@ namespace DotnetResume.Profiles
     {
       CreateMap<Resume, ResumeReadDto>();
       CreateMap<ResumeCreateDto, Resume>();
+      CreateMap<ResumeUpdateDto, Resume>();
+      CreateMap<Resume, ResumeUpdateDto>();
     }
   }
 }

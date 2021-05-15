@@ -10,5 +10,7 @@ namespace DotnetResume.Data
     Resume GetResumeById(int id);
     void CreateResume(Resume newResume);
     void UpdateResume(Resume newResume);
+
+    void DeleteResume(Resume newResume);
   }
 }
