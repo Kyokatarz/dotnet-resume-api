@@ -10,6 +10,11 @@ namespace DotnetResume.Data
       throw new System.NotImplementedException();
     }
 
+    public void DeleteResume(Resume newResume)
+    {
+      throw new System.NotImplementedException();
+    }
+
     public IEnumerable<Resume> GetAllResumes()
     {
       var resumes = new List<Resume>{

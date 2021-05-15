@@ -75,11 +75,21 @@ namespace DotnetResume.Controllers
       return NoContent();
     }
 
+    //Delete api/resumes/{id}
+    //Delete resume with id
     [HttpDelete("{id}")]
 
     public ActionResult DeleteResume(int id)
     {
+      var resumeModelFromRepo = _repository.GetResumeById(id);
+      if (resumeModelFromRepo == null)
+      {
+        return NotFound();
+      }
 
+      _repository.DeleteResume(resumeModelFromRepo);
+      _repository.SaveChanges();
+      return NoContent();
     }
   }
 }

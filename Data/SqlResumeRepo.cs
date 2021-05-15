@@ -23,6 +23,15 @@ namespace DotnetResume.Data
 
     }
 
+    public void DeleteResume(Resume resume)
+    {
+      if (resume == null)
+      {
+        throw new ArgumentNullException(nameof(resume));
+      }
+      _context.Resumes.Remove(resume);
+    }
+
     public IEnumerable<Resume> GetAllResumes()
     {
       return _context.Resumes.ToList();
